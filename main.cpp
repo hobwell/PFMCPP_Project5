@@ -850,11 +850,13 @@ int main()
 
     float smellIntensity = trashBin.fester();
     bool catAttracted = trashBin.attractCat (smellIntensity, tuxedoCat);
+    
     while (! catAttracted)
     {
         smellIntensity = trashBin.fester();
         catAttracted = trashBin.attractCat (smellIntensity, tuxedoCat);
     }
+    
     std::cout << std::endl;
     
     std::cout << "good to go!" << std::endl;
