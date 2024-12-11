@@ -107,9 +107,9 @@ struct Treadmill
         void changeFont (std::string newFont = "Arial", int newFontSize = 18);
         void changeColour (std::string newColor = "green");
         int growFontSize (int numSteps = 1);
-        void growFontSizeAndReportNewFontSize(int numSteps = 1);
+        void growFontSizeAndReportNewFontSize (int numSteps = 1);
         int shrinkFontSize (int numSteps = 1);
-        void shrinkFontSizeAndReportNewFontSize(int numSteps = 1);
+        void shrinkFontSizeAndReportNewFontSize (int numSteps = 1);
         void printFontInfo();
     };
 
@@ -262,14 +262,14 @@ int Treadmill::ValueDisplay::shrinkFontSize (int numSteps)
     return fontSize;
 }
 
-void Treadmill::ValueDisplay::growFontSizeAndReportNewFontSize(int numSteps)
+void Treadmill::ValueDisplay::growFontSizeAndReportNewFontSize (int numSteps)
 {
-    std::cout << "New font size: " << this->growFontSize(numSteps) << std::endl;
+    std::cout << "New font size: " << this->growFontSize (numSteps) << std::endl;
 }
 
-void Treadmill::ValueDisplay::shrinkFontSizeAndReportNewFontSize(int numSteps)
+void Treadmill::ValueDisplay::shrinkFontSizeAndReportNewFontSize (int numSteps)
 {
-    std::cout << "New font size: " << this->shrinkFontSize(numSteps) << std::endl;
+    std::cout << "New font size: " << this->shrinkFontSize (numSteps) << std::endl;
 }
 
 void Treadmill::ValueDisplay::printFontInfo()
