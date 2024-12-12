@@ -107,7 +107,10 @@ struct Treadmill
         void changeFont (std::string newFont = "Arial", int newFontSize = 18);
         void changeColour (std::string newColor = "green");
         int growFontSize (int numSteps = 1);
+        void growFontSizeAndReportNewFontSize (int numSteps = 1);
         int shrinkFontSize (int numSteps = 1);
+        void shrinkFontSizeAndReportNewFontSize (int numSteps = 1);
+        void printFontInfo();
     };
 
     ValueDisplay speedDisplay{ 0.0f, "speed", "km/h" };
@@ -117,6 +120,7 @@ struct Treadmill
     void incline (float inclinationDegrees);
     void display (ValueDisplay displayValue);
     float run (int numSteps, float strideLength = 0.00065f);
+    void printMembers();
 };
 
 Treadmill::Treadmill (float weightAllowance)
@@ -163,6 +167,15 @@ float Treadmill::run (int numSteps, float strideLength)
     }
     
     return sessionDistanceSimulatedKm;
+}
+
+void Treadmill::printMembers()
+{
+    std::cout << "Treadmill: maximumWeightAllowanceKg: " << this->maximumWeightAllowanceKg << std::endl;
+    std::cout << "Treadmill: currentSpeedKph: " << this->currentSpeedKph << std::endl;
+    std::cout << "Treadmill: currentInclinationDegrees: " << this->currentInclinationDegrees << std::endl;
+    std::cout << "Treadmill: totalDistanceSimulatedKm: " << this->totalDistanceSimulatedKm << std::endl;
+    std::cout << "Treadmill: sessionDistanceSimulatedKm: " << this->sessionDistanceSimulatedKm << std::endl;    
 }
 
 
@@ -249,6 +262,21 @@ int Treadmill::ValueDisplay::shrinkFontSize (int numSteps)
     return fontSize;
 }
 
+void Treadmill::ValueDisplay::growFontSizeAndReportNewFontSize (int numSteps)
+{
+    std::cout << "New font size: " << this->growFontSize (numSteps) << std::endl;
+}
+
+void Treadmill::ValueDisplay::shrinkFontSizeAndReportNewFontSize (int numSteps)
+{
+    std::cout << "New font size: " << this->shrinkFontSize (numSteps) << std::endl;
+}
+
+void Treadmill::ValueDisplay::printFontInfo()
+{
+    std::cout << this->name << " (" << this->font << ", " << this->fontSize << "pt, " << this->colour << "): " << this->value << " " << this->unit << std::endl;
+}
+
 /*
  copied UDT 2:
  */
@@ -268,6 +296,7 @@ struct Cat
     void eat (float amountOfFoodKg);
     void purr (float volumeDb);
     int unrollToiletPaper (int numSwipes = 4, int squaresRemaining = 400);
+    void printMembers();
 };
 
 Cat::Cat (std::string pattern, std::string colour)
@@ -348,6 +377,15 @@ int Cat::unrollToiletPaper (int numSwipes, int squaresRemaining)
     return squaresRemaining;
 }
 
+void Cat::printMembers()
+{
+    std::cout << "Cat: furPattern: " << this->furPattern << std::endl;
+    std::cout << "Cat: furColour: " << this->furColour << std::endl;
+    std::cout << "Cat: eyeColour: " << this->eyeColour << std::endl;
+    std::cout << "Cat: age: " << this->age << std::endl;
+    std::cout << "Cat: sex: " << this->sex << std::endl;
+}
+
 /*
  copied UDT 3:
  */
@@ -377,6 +415,7 @@ struct Fruit
         bool growStem (bool germinated = false);
         int growLeaves (bool germinated = false, int numLeaves = 2);
         bool germinate (int days);
+        void printMembers();
     };
 
     Seed seed{15};
@@ -385,6 +424,8 @@ struct Fruit
     Seed disperseSeed (float distanceKm);
     float feedSeed (float energy);
     float decay (int days);
+    void feedSeedAndPrintSeedEnergy (float energy);
+    void printMembers();
 };
 
 Fruit::Fruit()
@@ -420,6 +461,11 @@ float Fruit::feedSeed (float energy)
     return seed.storedEnergy;
 }
 
+void Fruit::feedSeedAndPrintSeedEnergy (float energy)
+{
+    std::cout << std::endl << this->feedSeed (energy) << " total energy stored." << std::endl;
+}
+
 float Fruit::decay (int days)
 {
     float integrity = (endospermLevel + hydrationLevel + epicarpThicknessCm + mesocarpThicknessCm) / 4.0f;
@@ -442,6 +488,12 @@ float Fruit::decay (int days)
     return integrity;
 }
 
+void Fruit::printMembers()
+{
+    std::cout << "Fruit: endospermLevel: " << this->endospermLevel << std::endl;
+    std::cout << "Fruit: hydrationLevel: " << this->hydrationLevel << std::endl;
+    std::cout << "Fruit: epicarpThicknessCm: " << this->epicarpThicknessCm << std::endl;
+    std::cout << "Fruit: mesocarpThicknessCm: " << this->mesocarpThicknessCm << std::endl; }
 
 Fruit::Seed::Seed(int germinationDays)
 {
@@ -546,6 +598,16 @@ bool Fruit::Seed::germinate (int days)
         std::cout << "Seed germinated!" << std::endl;
     
     return germinated;
+}
+
+void Fruit::Seed::printMembers()
+{
+    std::cout << "Seed: weightGrams: " << this->weightGrams << std::endl;
+    std::cout << "Seed: coatIntegrity: " << this->coatIntegrity << std::endl;
+    std::cout << "Seed: daysToGerminate: " << this->daysToGerminate << std::endl;
+    std::cout << "Seed: storedEnergy: " << this->storedEnergy << std::endl;
+    std::cout << "Seed: daysDormant: " << this->daysDormant << std::endl;
+    std::cout << "Seed: totalLeaves: " << this->totalLeaves << std::endl;
 }
 
 /*
@@ -700,8 +762,10 @@ int main()
     Treadmill::ValueDisplay maxWeightDisplay{ 200.0f, "max weight", "kg" };
     maxWeightDisplay.changeFont ("Times New Roman", 24);
     maxWeightDisplay.changeColour ("Blue");
+    
     std::cout << maxWeightDisplay.name << " (" << maxWeightDisplay.font << ", " << maxWeightDisplay.fontSize << "pt, " << maxWeightDisplay.colour << "): " << maxWeightDisplay.value << " " << maxWeightDisplay.unit << std::endl;
-
+    maxWeightDisplay.printFontInfo();
+    
     std::cout << std::endl;
 
     maxWeightDisplay.changeColour ("Orange");
@@ -709,25 +773,29 @@ int main()
     maxWeightDisplay.changeFont ("Helvetica", 18);
 
     std::cout << std::endl;
-        
-    auto newFontSize = maxWeightDisplay.shrinkFontSize (-1);
-    std::cout << "New font size: " << maxWeightDisplay.fontSize << std::endl;
-    newFontSize = maxWeightDisplay.shrinkFontSize (maxWeightDisplay.fontSize);
-    std::cout << "New font size: " << maxWeightDisplay.fontSize << std::endl;
-    newFontSize = maxWeightDisplay.growFontSize (12);
-    std::cout << "New font size: " << maxWeightDisplay.fontSize << std::endl;
-    newFontSize = maxWeightDisplay.growFontSize (-6);
-    std::cout << "New font size: " << maxWeightDisplay.fontSize << std::endl;
+
+    std::cout << "New font size: " << maxWeightDisplay.shrinkFontSize (-1) << std::endl;
+    maxWeightDisplay.shrinkFontSizeAndReportNewFontSize (-1);
+
+    std::cout << "New font size: " << maxWeightDisplay.shrinkFontSize (maxWeightDisplay.fontSize) << std::endl;
+    maxWeightDisplay.shrinkFontSizeAndReportNewFontSize (maxWeightDisplay.fontSize);
+    
+    std::cout << "New font size: " << maxWeightDisplay.growFontSize (12) << std::endl;
+    maxWeightDisplay.growFontSizeAndReportNewFontSize (12);
+    
+    std::cout << "New font size: " << maxWeightDisplay.growFontSize (-6) << std::endl;
+    maxWeightDisplay.growFontSizeAndReportNewFontSize (-6);
     
     std::cout << std::endl;
     
     Treadmill treadmill{ maxWeightDisplay.value };
-    std::cout << "Treadmill: maximumWeightAllowanceKg: " << treadmill.maximumWeightAllowanceKg << std::endl;
-    std::cout << "Treadmill: currentSpeedKph: " << treadmill.currentSpeedKph << std::endl;
-    std::cout << "Treadmill: currentInclinationDegrees: " << treadmill.currentInclinationDegrees << std::endl;
-    std::cout << "Treadmill: totalDistanceSimulatedKm: " << treadmill.totalDistanceSimulatedKm << std::endl;
-    std::cout << "Treadmill: sessionDistanceSimulatedKm: " << treadmill.sessionDistanceSimulatedKm << std::endl;
-
+    std::cout << "treadmill: maximumWeightAllowanceKg: " << treadmill.maximumWeightAllowanceKg << std::endl;
+    std::cout << "treadmill: currentSpeedKph: " << treadmill.currentSpeedKph << std::endl;
+    std::cout << "treadmill: currentInclinationDegrees: " << treadmill.currentInclinationDegrees << std::endl;
+    std::cout << "treadmill: totalDistanceSimulatedKm: " << treadmill.totalDistanceSimulatedKm << std::endl;
+    std::cout << "treadmill: sessionDistanceSimulatedKm: " << treadmill.sessionDistanceSimulatedKm << std::endl;
+    treadmill.printMembers();
+    
     std::cout << std::endl;
 
     treadmill.rotateBelt (10.0f);
@@ -746,12 +814,13 @@ int main()
     std::cout << std::endl;
     
     Cat tuxedoCat{ "tuxedo", "black" };
-    std::cout << "Cat: furPattern: " << tuxedoCat.furPattern << std::endl;
-    std::cout << "Cat: furColour: " << tuxedoCat.furColour << std::endl;
-    std::cout << "Cat: eyeColour: " << tuxedoCat.eyeColour << std::endl;
-    std::cout << "Cat: age: " << tuxedoCat.age << std::endl;
-    std::cout << "Cat: sex: " << tuxedoCat.sex << std::endl;
-
+    std::cout << "tuxedoCat: furPattern: " << tuxedoCat.furPattern << std::endl;
+    std::cout << "tuxedoCat: furColour: " << tuxedoCat.furColour << std::endl;
+    std::cout << "tuxedoCat: eyeColour: " << tuxedoCat.eyeColour << std::endl;
+    std::cout << "tuxedoCat: age: " << tuxedoCat.age << std::endl;
+    std::cout << "tuxedoCat: sex: " << tuxedoCat.sex << std::endl;
+    tuxedoCat.printMembers();
+    
     std::cout << std::endl;
 
     if (tuxedoCat.hunt ("mouse"))
@@ -774,47 +843,51 @@ int main()
     std::cout << std::endl;
 
     Fruit fruit;
-    std::cout << "Fruit: endospermLevel: " << fruit.endospermLevel << std::endl;
-    std::cout << "Fruit: hydrationLevel: " << fruit.hydrationLevel << std::endl;
-    std::cout << "Fruit: epicarpThicknessCm: " << fruit.epicarpThicknessCm << std::endl;
-    std::cout << "Fruit: mesocarpThicknessCm: " << fruit.mesocarpThicknessCm << std::endl;
-
+    std::cout << "fruit: endospermLevel: " << fruit.endospermLevel << std::endl;
+    std::cout << "fruit: hydrationLevel: " << fruit.hydrationLevel << std::endl;
+    std::cout << "fruit: epicarpThicknessCm: " << fruit.epicarpThicknessCm << std::endl;
+    std::cout << "fruit: mesocarpThicknessCm: " << fruit.mesocarpThicknessCm << std::endl;
+    fruit.printMembers();
+    
     std::cout << std::endl;
 
     fruit.hydrationLevel = 2.0f;
     fruit.protectSeed (1.0f);
     std::cout << std::endl << fruit.feedSeed (1.5f) << " total energy stored." << std::endl;
-
+    fruit.feedSeedAndPrintSeedEnergy (1.5f);
+    
     std::cout << std::endl;
 
     float fruitIntegrity = fruit.decay (5);
-    std::cout << "Fruit integrity: " << fruitIntegrity << std::endl;
+    std::cout << "fruit integrity: " << fruitIntegrity << std::endl;
     fruitIntegrity = fruit.decay (10);
-    std::cout << "Fruit integrity: " << fruitIntegrity << std::endl;
+    std::cout << "fruit integrity: " << fruitIntegrity << std::endl;
     fruitIntegrity = fruit.decay (7);
-    std::cout << "Fruit integrity: " << fruitIntegrity << std::endl;
+    std::cout << "fruit integrity: " << fruitIntegrity << std::endl;
     
     std::cout << std::endl;
     
     Fruit::Seed newSeed = fruit.disperseSeed (10.0f);
-    std::cout << "Seed: weightGrams: " << newSeed.weightGrams << std::endl;
-    std::cout << "Seed: coatIntegrity: " << newSeed.coatIntegrity << std::endl;
-    std::cout << "Seed: daysToGerminate: " << newSeed.daysToGerminate << std::endl;
-    std::cout << "Seed: storedEnergy: " << newSeed.storedEnergy << std::endl;
-    std::cout << "Seed: daysDormant: " << newSeed.daysDormant << std::endl;
-    std::cout << "Seed: totalLeaves: " << newSeed.totalLeaves << std::endl;
-
+    std::cout << "newSeed: weightGrams: " << newSeed.weightGrams << std::endl;
+    std::cout << "newSeed: coatIntegrity: " << newSeed.coatIntegrity << std::endl;
+    std::cout << "newSeed: daysToGerminate: " << newSeed.daysToGerminate << std::endl;
+    std::cout << "newSeed: storedEnergy: " << newSeed.storedEnergy << std::endl;
+    std::cout << "newSeed: daysDormant: " << newSeed.daysDormant << std::endl;
+    std::cout << "newSeed: totalLeaves: " << newSeed.totalLeaves << std::endl;
+    newSeed.printMembers();
+    
     std::cout << std::endl;
-        
+    
     Fruit::Seed seed{20};
     seed.storedEnergy = 1.0f;
-    std::cout << "Seed: weightGrams: " << seed.weightGrams << std::endl;
-    std::cout << "Seed: coatIntegrity: " << seed.coatIntegrity << std::endl;
-    std::cout << "Seed: daysToGerminate: " << seed.daysToGerminate << std::endl;
-    std::cout << "Seed: storedEnergy: " << seed.storedEnergy << std::endl;
-    std::cout << "Seed: daysDormant: " << seed.daysDormant << std::endl;
-    std::cout << "Seed: totalLeaves: " << seed.totalLeaves << std::endl;
-
+    std::cout << "seed: weightGrams: " << seed.weightGrams << std::endl;
+    std::cout << "seed: coatIntegrity: " << seed.coatIntegrity << std::endl;
+    std::cout << "seed: daysToGerminate: " << seed.daysToGerminate << std::endl;
+    std::cout << "seed: storedEnergy: " << seed.storedEnergy << std::endl;
+    std::cout << "seed: daysDormant: " << seed.daysDormant << std::endl;
+    std::cout << "seed: totalLeaves: " << seed.totalLeaves << std::endl;
+    seed.printMembers();
+    
     std::cout << std::endl;
 
     auto germinated = seed.germinate (25.0f);
