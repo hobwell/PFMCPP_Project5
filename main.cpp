@@ -140,14 +140,14 @@ struct Treadmill
 
 struct TreadmillWrapper
 {
-	TreadmillWrapper (Treadmill* t) : treadmill (t) {}
+    TreadmillWrapper (Treadmill* t) : treadmill (t) {}
 
     ~TreadmillWrapper()
-	{
+    {
 		delete treadmill;
-	}
+    }
 
-	Treadmill* treadmill = nullptr;
+    Treadmill* treadmill = nullptr;
 };
 
 Treadmill::Treadmill (float weightAllowance)
@@ -330,14 +330,14 @@ struct Cat
 
 struct CatWrapper
 {
-	CatWrapper (Cat* c) : cat (c) {}
+    CatWrapper (Cat* c) : cat (c) {}
 
     ~CatWrapper()
-	{
+    {
 		delete cat;
-	}
+    }
 
-	Cat* cat = nullptr;
+    Cat* cat = nullptr;
 };
 
 Cat::Cat (std::string pattern, std::string colour)
@@ -475,14 +475,14 @@ struct Fruit
 
 struct FruitWrapper
 {
-	FruitWrapper (Fruit* f) : fruit (f) {}
+    FruitWrapper (Fruit* f) : fruit (f) {}
 
     ~FruitWrapper()
-	{
+    {
 		delete fruit;
-	}
+    }
 
-	Fruit* fruit = nullptr;
+    Fruit* fruit = nullptr;
 };
 
 Fruit::Fruit()
@@ -689,14 +689,14 @@ struct Person
 
 struct PersonWrapper
 {
-	PersonWrapper (Person* p) : person (p) {}
+    PersonWrapper (Person* p) : person (p) {}
 
     ~PersonWrapper()
-	{
+    {
 		delete person;
-	}
+    }
 
-	Person* person = nullptr;
+    Person* person = nullptr;
 };
 
 Person::Person()
@@ -760,17 +760,17 @@ struct TrashBin
 
 struct TrashBinWrapper
 {
-	TrashBinWrapper (TrashBin* tb) : trashBin (tb) {}
+    TrashBinWrapper (TrashBin* tb) : trashBin (tb) {}
 
     ~TrashBinWrapper()
-	{
+    {
 		delete trashBin;
-	}
+    }
 
-	TrashBin* trashBin = nullptr;
+    TrashBin* trashBin = nullptr;
 };
 
-TrashBin::TrashBin(Cat& nearbyCat) : seed{15}
+TrashBin::TrashBin (Cat& nearbyCat) : seed{15}
 {
     std::cout << std::endl << "A TrashBin has popped into existence, complete with trash (and cats)!" << std::endl;
     std::cout << "The smell is attacting some cats!" << std::endl;
