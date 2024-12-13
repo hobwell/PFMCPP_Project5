@@ -86,6 +86,7 @@ void Axe::aConstMemberFunction() const { }
 */
 
 #include <iostream>
+#include "LeakedObjectDetector.h"
 /*
  copied UDT 1:
  */
@@ -120,7 +121,9 @@ struct Treadmill
         void growFontSizeAndReportNewFontSize (int numSteps = 1);
         int shrinkFontSize (int numSteps = 1);
         void shrinkFontSizeAndReportNewFontSize (int numSteps = 1);
-        void printFontInfo();
+        void printFontInfo() const;
+
+        JUCE_LEAK_DETECTOR (ValueDisplay)
     };
 
     ValueDisplay speedDisplay{ 0.0f, "speed", "km/h" };
@@ -128,9 +131,23 @@ struct Treadmill
 
     void rotateBelt (float speeedKph);
     void incline (float inclinationDegrees);
-    void display (ValueDisplay displayValue);
+    void display (const ValueDisplay& displayValue) const;
     float run (int numSteps, float strideLength = 0.00065f);
-    void printMembers();
+    void printMembers() const;
+
+    JUCE_LEAK_DETECTOR (Treadmill)
+};
+
+struct TreadmillWrapper
+{
+    TreadmillWrapper (Treadmill* t) : treadmill (t) {}
+
+    ~TreadmillWrapper()
+    {
+		delete treadmill;
+    }
+
+    Treadmill* treadmill = nullptr;
 };
 
 Treadmill::Treadmill (float weightAllowance)
@@ -160,7 +177,7 @@ void Treadmill::incline (float inclinationDegrees)
     std::cout << "Prepare to climb!" << std::endl;
 }
 
-void Treadmill::display (ValueDisplay displayValue)
+void Treadmill::display (const ValueDisplay& displayValue) const
 {
     std::cout << displayValue.name << ": " << displayValue.value << " " << displayValue.unit << std::endl;
 }
@@ -179,7 +196,7 @@ float Treadmill::run (int numSteps, float strideLength)
     return sessionDistanceSimulatedKm;
 }
 
-void Treadmill::printMembers()
+void Treadmill::printMembers() const
 {
     std::cout << "Treadmill: maximumWeightAllowanceKg: " << this->maximumWeightAllowanceKg << std::endl;
     std::cout << "Treadmill: currentSpeedKph: " << this->currentSpeedKph << std::endl;
@@ -282,7 +299,7 @@ void Treadmill::ValueDisplay::shrinkFontSizeAndReportNewFontSize (int numSteps)
     std::cout << "New font size: " << this->shrinkFontSize (numSteps) << std::endl;
 }
 
-void Treadmill::ValueDisplay::printFontInfo()
+void Treadmill::ValueDisplay::printFontInfo() const
 {
     std::cout << this->name << " (" << this->font << ", " << this->fontSize << "pt, " << this->colour << "): " << this->value << " " << this->unit << std::endl;
 }
@@ -302,11 +319,25 @@ struct Cat
     char sex = 'F';
     int age = 3;
 
-    bool hunt (std::string creature);
-    void eat (float amountOfFoodKg);
-    void purr (float volumeDb);
-    int unrollToiletPaper (int numSwipes = 4, int squaresRemaining = 400);
-    void printMembers();
+    bool hunt (std::string creature) const;
+    void eat (float amountOfFoodKg) const;
+    void purr (float volumeDb) const;
+    int unrollToiletPaper (int numSwipes = 4, int squaresRemaining = 400) const;
+    void printMembers() const;
+
+    JUCE_LEAK_DETECTOR (Cat)
+};
+
+struct CatWrapper
+{
+    CatWrapper (Cat* c) : cat (c) {}
+
+    ~CatWrapper()
+    {
+		delete cat;
+    }
+
+    Cat* cat = nullptr;
 };
 
 Cat::Cat (std::string pattern, std::string colour)
@@ -318,10 +349,10 @@ Cat::Cat (std::string pattern, std::string colour)
 
 Cat::~Cat()
 {
-    std::cout << "A Cat has been destructed." << std::endl;
+    std::cout << "A " << this->furColour << " " << this->furPattern << " Cat has been destructed." << std::endl;
 }
 
-bool Cat::hunt (std::string creature)
+bool Cat::hunt (std::string creature) const
 {
     std::cout << "The " << eyeColour << "-eyed cat is hunting a " << creature << "!" << std::endl;
 
@@ -342,7 +373,7 @@ bool Cat::hunt (std::string creature)
     return false;
 }
 
-void Cat::eat (float amountOfFoodKg)
+void Cat::eat (float amountOfFoodKg) const
 {
     if (amountOfFoodKg > 0.0f)
         std::cout << "nom nom nom" << std::endl;
@@ -350,7 +381,7 @@ void Cat::eat (float amountOfFoodKg)
         std::cout << "meow" << std::endl;
 }
 
-void Cat::purr (float volumeDb)
+void Cat::purr (float volumeDb) const
 {
     if (volumeDb <= 0.0f)
     {
@@ -366,7 +397,7 @@ void Cat::purr (float volumeDb)
     }
 }
 
-int Cat::unrollToiletPaper (int numSwipes, int squaresRemaining)
+int Cat::unrollToiletPaper (int numSwipes, int squaresRemaining) const
 {
     if (numSwipes > 0)
     {
@@ -387,7 +418,7 @@ int Cat::unrollToiletPaper (int numSwipes, int squaresRemaining)
     return squaresRemaining;
 }
 
-void Cat::printMembers()
+void Cat::printMembers() const
 {
     std::cout << "Cat: furPattern: " << this->furPattern << std::endl;
     std::cout << "Cat: furColour: " << this->furColour << std::endl;
@@ -425,7 +456,9 @@ struct Fruit
         bool growStem (bool germinated = false);
         int growLeaves (bool germinated = false, int numLeaves = 2);
         bool germinate (int days);
-        void printMembers();
+        void printMembers() const;
+
+        JUCE_LEAK_DETECTOR (Seed)
     };
 
     Seed seed{15};
@@ -435,7 +468,21 @@ struct Fruit
     float feedSeed (float energy);
     float decay (int days);
     void feedSeedAndPrintSeedEnergy (float energy);
-    void printMembers();
+    void printMembers() const;
+
+    JUCE_LEAK_DETECTOR (Fruit)
+};
+
+struct FruitWrapper
+{
+    FruitWrapper (Fruit* f) : fruit (f) {}
+
+    ~FruitWrapper()
+    {
+		delete fruit;
+    }
+
+    Fruit* fruit = nullptr;
 };
 
 Fruit::Fruit()
@@ -498,7 +545,7 @@ float Fruit::decay (int days)
     return integrity;
 }
 
-void Fruit::printMembers()
+void Fruit::printMembers() const
 {
     std::cout << "Fruit: endospermLevel: " << this->endospermLevel << std::endl;
     std::cout << "Fruit: hydrationLevel: " << this->hydrationLevel << std::endl;
@@ -610,7 +657,7 @@ bool Fruit::Seed::germinate (int days)
     return germinated;
 }
 
-void Fruit::Seed::printMembers()
+void Fruit::Seed::printMembers() const
 {
     std::cout << "Seed: weightGrams: " << this->weightGrams << std::endl;
     std::cout << "Seed: coatIntegrity: " << this->coatIntegrity << std::endl;
@@ -634,8 +681,22 @@ struct Person
     Treadmill treadmill{300.0f};
     Treadmill::ValueDisplay temperatureDisplay{23.0f, "temperature", "C"};
 
-    void feedCat (float amountOfFoodKg, Cat cat);
+    void feedCat (float amountOfFoodKg, const Cat& cat) const;
     float excercise (int timeInMinutes, float strideLength = 0.65f);
+
+   JUCE_LEAK_DETECTOR (Person)
+};
+
+struct PersonWrapper
+{
+    PersonWrapper (Person* p) : person (p) {}
+
+    ~PersonWrapper()
+    {
+		delete person;
+    }
+
+    Person* person = nullptr;
 };
 
 Person::Person()
@@ -655,14 +716,14 @@ Person::~Person()
     dali.unrollToiletPaper(11, 400);
 }
 
-void Person::feedCat (float amountOfFoodKg, Cat cat) // not using pointers yet...
+void Person::feedCat (float amountOfFoodKg, const Cat& cat) const
 {
     cat.eat (amountOfFoodKg);
 }
 
 float Person::excercise (int timeInMinutes, float strideLength)
 {
-    std::cout << std::endl << "Let's cool things off before we excersise!" << std::endl;
+    std::cout << std::endl << "Let's cool things off before we excercise!" << std::endl;
     temperatureDisplay.updateValue (20.5f);
     int numSteps = timeInMinutes * 27;
     treadmill.rotateBelt (2.0f);
@@ -680,7 +741,7 @@ float Person::excercise (int timeInMinutes, float strideLength)
  */
 struct TrashBin
 {
-    TrashBin();
+    TrashBin (Cat& nearbyCat);
     ~TrashBin();
 
     Cat niceCat{"calico", "white-orange-black"};
@@ -691,17 +752,30 @@ struct TrashBin
     Fruit watermelon;
     Fruit::Seed seed;
 
-    bool attractCat (float smellIntensity, Cat cat);
+    bool attractCat (float smellIntensity, const Cat& cat);
     float fester();
+
+    JUCE_LEAK_DETECTOR (TrashBin)
 };
 
-TrashBin::TrashBin() : seed{15}
+struct TrashBinWrapper
+{
+    TrashBinWrapper (TrashBin* tb) : trashBin (tb) {}
+
+    ~TrashBinWrapper()
+    {
+		delete trashBin;
+    }
+
+    TrashBin* trashBin = nullptr;
+};
+
+TrashBin::TrashBin (Cat& nearbyCat) : seed{15}
 {
     std::cout << std::endl << "A TrashBin has popped into existence, complete with trash (and cats)!" << std::endl;
     std::cout << "The smell is attacting some cats!" << std::endl;
 
-    Cat randoCat{"tabby", "white"};
-    attractCat (10.0f, randoCat);
+    attractCat (10.0f, nearbyCat);
 }
 
 TrashBin::~TrashBin()
@@ -714,7 +788,7 @@ TrashBin::~TrashBin()
     std::cout << "The trash collector takes the cats with them." << std::endl;
 }
 
-bool TrashBin::attractCat (float smellIntensity, Cat cat)
+bool TrashBin::attractCat (float smellIntensity, const Cat& cat)
 {
     std::cout << std::endl;
     
@@ -798,86 +872,86 @@ int main()
     
     std::cout << std::endl;
     
-    Treadmill treadmill{ maxWeightDisplay.value };
-    std::cout << "treadmill: maximumWeightAllowanceKg: " << treadmill.maximumWeightAllowanceKg << std::endl;
-    std::cout << "treadmill: currentSpeedKph: " << treadmill.currentSpeedKph << std::endl;
-    std::cout << "treadmill: currentInclinationDegrees: " << treadmill.currentInclinationDegrees << std::endl;
-    std::cout << "treadmill: totalDistanceSimulatedKm: " << treadmill.totalDistanceSimulatedKm << std::endl;
-    std::cout << "treadmill: sessionDistanceSimulatedKm: " << treadmill.sessionDistanceSimulatedKm << std::endl;
-    treadmill.printMembers();
+    TreadmillWrapper treadmillWrapper (new Treadmill{ maxWeightDisplay.value });
+    std::cout << "treadmill: maximumWeightAllowanceKg: " << treadmillWrapper.treadmill->maximumWeightAllowanceKg << std::endl;
+    std::cout << "treadmill: currentSpeedKph: " << treadmillWrapper.treadmill->currentSpeedKph << std::endl;
+    std::cout << "treadmill: currentInclinationDegrees: " << treadmillWrapper.treadmill->currentInclinationDegrees << std::endl;
+    std::cout << "treadmill: totalDistanceSimulatedKm: " << treadmillWrapper.treadmill->totalDistanceSimulatedKm << std::endl;
+    std::cout << "treadmill: sessionDistanceSimulatedKm: " << treadmillWrapper.treadmill->sessionDistanceSimulatedKm << std::endl;
+    treadmillWrapper.treadmill->printMembers();
     
     std::cout << std::endl;
 
-    treadmill.rotateBelt (10.0f);
-    treadmill.incline (5.0f);
-    treadmill.display (treadmill.speedDisplay);
-    treadmill.display (treadmill.inclineDisplay);
-    treadmill.display (maxWeightDisplay);
+    treadmillWrapper.treadmill->rotateBelt (10.0f);
+    treadmillWrapper.treadmill->incline (5.0f);
+    treadmillWrapper.treadmill->display (treadmillWrapper.treadmill->speedDisplay);
+    treadmillWrapper.treadmill->display (treadmillWrapper.treadmill->inclineDisplay);
+    treadmillWrapper.treadmill->display (maxWeightDisplay);
 
     std::cout << std::endl;
 
-    auto distanceRun = treadmill.run (4);
+    auto distanceRun = treadmillWrapper.treadmill->run (4);
     std::cout << "Distance run: " << distanceRun << std::endl << std::endl;
-    distanceRun = treadmill.run (10);
+    distanceRun = treadmillWrapper.treadmill->run (10);
     std::cout << "Distance run: " << distanceRun << std::endl;
 
     std::cout << std::endl;
     
-    Cat tuxedoCat{ "tuxedo", "black" };
-    std::cout << "tuxedoCat: furPattern: " << tuxedoCat.furPattern << std::endl;
-    std::cout << "tuxedoCat: furColour: " << tuxedoCat.furColour << std::endl;
-    std::cout << "tuxedoCat: eyeColour: " << tuxedoCat.eyeColour << std::endl;
-    std::cout << "tuxedoCat: age: " << tuxedoCat.age << std::endl;
-    std::cout << "tuxedoCat: sex: " << tuxedoCat.sex << std::endl;
-    tuxedoCat.printMembers();
+    CatWrapper catWrapper (new Cat{ "tuxedo", "black" });
+    std::cout << "tuxedoCat: furPattern: " << catWrapper.cat->furPattern << std::endl;
+    std::cout << "tuxedoCat: furColour: " << catWrapper.cat->furColour << std::endl;
+    std::cout << "tuxedoCat: eyeColour: " << catWrapper.cat->eyeColour << std::endl;
+    std::cout << "tuxedoCat: age: " << catWrapper.cat->age << std::endl;
+    std::cout << "tuxedoCat: sex: " << catWrapper.cat->sex << std::endl;
+    catWrapper.cat->printMembers();
     
     std::cout << std::endl;
 
-    if (tuxedoCat.hunt ("mouse"))
+    if (catWrapper.cat->hunt ("mouse"))
         std::cout << "The cat caught the mouse!" << std::endl;
 
-    if (!tuxedoCat.hunt ("red dot"))
+    if (!catWrapper.cat->hunt ("red dot"))
         std::cout << "The cat is still chasing the red dot." << std::endl;
 
-    tuxedoCat.eat (0.5f);
-    tuxedoCat.purr (50.0f);
+    catWrapper.cat->eat (0.5f);
+    catWrapper.cat->purr (50.0f);
 
     std::cout << std::endl;
 
     std::cout << "The cat has found a roll of toilet paper." << std::endl;
-    int squaresLeft = tuxedoCat.unrollToiletPaper (3);
+    int squaresLeft = catWrapper.cat->unrollToiletPaper (3);
     std::cout << "Squares left: " << squaresLeft << std::endl;
-    squaresLeft = tuxedoCat.unrollToiletPaper (5, squaresLeft);
+    squaresLeft = catWrapper.cat->unrollToiletPaper (5, squaresLeft);
     std::cout << "Squares left: " << squaresLeft << std::endl;
     
     std::cout << std::endl;
 
-    Fruit fruit;
-    std::cout << "fruit: endospermLevel: " << fruit.endospermLevel << std::endl;
-    std::cout << "fruit: hydrationLevel: " << fruit.hydrationLevel << std::endl;
-    std::cout << "fruit: epicarpThicknessCm: " << fruit.epicarpThicknessCm << std::endl;
-    std::cout << "fruit: mesocarpThicknessCm: " << fruit.mesocarpThicknessCm << std::endl;
-    fruit.printMembers();
+    FruitWrapper fruitWrapper(new Fruit);
+    std::cout << "fruit: endospermLevel: " << fruitWrapper.fruit->endospermLevel << std::endl;
+    std::cout << "fruit: hydrationLevel: " << fruitWrapper.fruit->hydrationLevel << std::endl;
+    std::cout << "fruit: epicarpThicknessCm: " << fruitWrapper.fruit->epicarpThicknessCm << std::endl;
+    std::cout << "fruit: mesocarpThicknessCm: " << fruitWrapper.fruit->mesocarpThicknessCm << std::endl;
+    fruitWrapper.fruit->printMembers();
     
     std::cout << std::endl;
 
-    fruit.hydrationLevel = 2.0f;
-    fruit.protectSeed (1.0f);
-    std::cout << std::endl << fruit.feedSeed (1.5f) << " total energy stored." << std::endl;
-    fruit.feedSeedAndPrintSeedEnergy (1.5f);
+    fruitWrapper.fruit->hydrationLevel = 2.0f;
+    fruitWrapper.fruit->protectSeed (1.0f);
+    std::cout << std::endl << fruitWrapper.fruit->feedSeed (1.5f) << " total energy stored." << std::endl;
+    fruitWrapper.fruit->feedSeedAndPrintSeedEnergy (1.5f);
     
     std::cout << std::endl;
 
-    float fruitIntegrity = fruit.decay (5);
+    float fruitIntegrity = fruitWrapper.fruit->decay (5);
     std::cout << "fruit integrity: " << fruitIntegrity << std::endl;
-    fruitIntegrity = fruit.decay (10);
+    fruitIntegrity = fruitWrapper.fruit->decay (10);
     std::cout << "fruit integrity: " << fruitIntegrity << std::endl;
-    fruitIntegrity = fruit.decay (7);
+    fruitIntegrity = fruitWrapper.fruit->decay (7);
     std::cout << "fruit integrity: " << fruitIntegrity << std::endl;
     
     std::cout << std::endl;
     
-    Fruit::Seed newSeed = fruit.disperseSeed (10.0f);
+    Fruit::Seed newSeed = fruitWrapper.fruit->disperseSeed (10.0f);
     std::cout << "newSeed: weightGrams: " << newSeed.weightGrams << std::endl;
     std::cout << "newSeed: coatIntegrity: " << newSeed.coatIntegrity << std::endl;
     std::cout << "newSeed: daysToGerminate: " << newSeed.daysToGerminate << std::endl;
@@ -926,23 +1000,25 @@ int main()
 
     std::cout << std::endl;
 
-    Person someone;
-    float distance = someone.excercise (10, 0.00124f);
+    PersonWrapper someoneWrapper (new Person);
+    float distance = someoneWrapper.person->excercise (10, 0.00124f);
     std::cout << "someone ran " << distance << " km." << std::endl;
     std::cout << "someone feeds the neighborhood stray." << std::endl;
-    someone.feedCat (0.125f, tuxedoCat);
+    someoneWrapper.person->feedCat (0.125f, *(catWrapper.cat));
     
     std::cout << std::endl;
 
-    TrashBin trashBin;
+    CatWrapper randoCatWrapper (new Cat{"tabby", "white"});
+    
+    TrashBinWrapper trashBinWrapper (new TrashBin(*(randoCatWrapper.cat)));
 
-    float smellIntensity = trashBin.fester();
-    bool catAttracted = trashBin.attractCat (smellIntensity, tuxedoCat);
+    float smellIntensity = trashBinWrapper.trashBin->fester();
+    bool catAttracted = trashBinWrapper.trashBin->attractCat (smellIntensity, *(catWrapper.cat));
     
     while (! catAttracted)
     {
-        smellIntensity = trashBin.fester();
-        catAttracted = trashBin.attractCat (smellIntensity, tuxedoCat);
+        smellIntensity = trashBinWrapper.trashBin->fester();
+        catAttracted = trashBinWrapper.trashBin->attractCat (smellIntensity, *(catWrapper.cat));
     }
     
     std::cout << std::endl;
