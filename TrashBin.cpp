@@ -18,7 +18,7 @@ TrashBin::~TrashBin()
     std::cout << "The trash collector takes the cats with them." << std::endl;
 }
 
-bool TrashBin::attractCat (float smellIntensity, const Cat& cat)
+bool TrashBin::attractCat (const float smellIntensity, const Cat& cat)
 {
     std::cout << std::endl;
     

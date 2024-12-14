@@ -17,7 +17,7 @@ void Treadmill::display (const ValueDisplay& displayValue) const
     std::cout << displayValue.name << ": " << displayValue.value << " " << displayValue.unit << std::endl;
 }
 
-void Treadmill::incline (float inclinationDegrees)
+void Treadmill::incline (const float inclinationDegrees)
 {
     currentInclinationDegrees = inclinationDegrees;
     inclineDisplay.updateValue (currentInclinationDegrees);
@@ -33,7 +33,7 @@ void Treadmill::printMembers() const
     std::cout << "Treadmill: sessionDistanceSimulatedKm: " << this->sessionDistanceSimulatedKm << std::endl;    
 }
 
-void Treadmill::rotateBelt (float speedKph)
+void Treadmill::rotateBelt (const float speedKph)
 {
     std::cout << "Current Session distance: " << sessionDistanceSimulatedKm << " km!" << std::endl;
     currentSpeedKph = speedKph;
@@ -41,7 +41,7 @@ void Treadmill::rotateBelt (float speedKph)
     std::cout << "Away we go (at " << currentSpeedKph << " km/h)!" << std::endl;
 }
 
-float Treadmill::run (int numSteps, float strideLength)
+float Treadmill::run (const int numSteps, const float strideLength)
 {
     for (int i = 0; i < numSteps; ++i)
     {

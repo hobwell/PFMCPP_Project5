@@ -14,10 +14,10 @@ struct Seed
     int totalLeaves = 0;
     float weightGrams = 0.05f;
 
-    bool germinate (int days);    
-    int growLeaves (bool germinated = false, int numLeaves = 2);    
-    bool growRoot (bool germinated = false);
-    bool growStem (bool germinated = false);
+    bool germinate (const int days);    
+    int growLeaves (const bool germinated = false, const int numLeaves = 2);    
+    bool growRoot (const bool germinated = false);
+    bool growStem (const bool germinated = false);
     void printMembers() const;
 
     JUCE_LEAK_DETECTOR (Seed)

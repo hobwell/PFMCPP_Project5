@@ -18,10 +18,10 @@ struct Treadmill
     ValueDisplay speedDisplay{ 0.0f, "speed", "km/h" };    
 
     void display (const ValueDisplay& displayValue) const;
-    void incline (float inclinationDegrees);
+    void incline (const float inclinationDegrees);
     void printMembers() const;
-    void rotateBelt (float speeedKph);
-    float run (int numSteps, float strideLength = 0.00065f);
+    void rotateBelt (const float speeedKph);
+    float run (const int numSteps, const float strideLength = 0.00065f);
 
     JUCE_LEAK_DETECTOR (Treadmill)
 };

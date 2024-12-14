@@ -17,7 +17,7 @@ Person::~Person()
     dali.unrollToiletPaper(11, 400);
 }
 
-float Person::excercise (int timeInMinutes, float strideLength)
+float Person::excercise (const int timeInMinutes, const float strideLength)
 {
     std::cout << std::endl << "Let's cool things off before we excercise!" << std::endl;
     temperatureDisplay.updateValue (20.5f);
@@ -32,7 +32,7 @@ float Person::excercise (int timeInMinutes, float strideLength)
     return distance;
 }
 
-void Person::feedCat (float amountOfFoodKg, const Cat& cat) const
+void Person::feedCat (const float amountOfFoodKg, const Cat& cat) const
 {
     cat.eat (amountOfFoodKg);
 }

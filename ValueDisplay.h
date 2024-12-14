@@ -15,14 +15,14 @@ struct ValueDisplay
     std::string unit = "";
     float value = 0.0f;
 
-    void changeColour (std::string newColor = "green");    
-    void changeFont (std::string newFont = "Arial", int newFontSize = 18);
-    int growFontSize (int numSteps = 1);
-    void growFontSizeAndReportNewFontSize (int numSteps = 1);
+    void changeColour (const std::string newColor = "green");    
+    void changeFont (const std::string newFont = "Arial", const int newFontSize = 18);
+    int growFontSize (const int numSteps = 1);
+    void growFontSizeAndReportNewFontSize (const int numSteps = 1);
     void printFontInfo() const;    
-    int shrinkFontSize (int numSteps = 1);
-    void shrinkFontSizeAndReportNewFontSize (int numSteps = 1);
-    void updateValue (float newValue);
+    int shrinkFontSize (const int numSteps = 1);
+    void shrinkFontSizeAndReportNewFontSize (const int numSteps = 1);
+    void updateValue (const float newValue);
 
     JUCE_LEAK_DETECTOR (ValueDisplay)
 };

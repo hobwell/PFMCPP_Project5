@@ -18,7 +18,7 @@ struct TrashBin
     Treadmill treadmill{100.0f};
     Fruit watermelon;
     
-    bool attractCat (float smellIntensity, const Cat& cat);
+    bool attractCat (const float smellIntensity, const Cat& cat);
     float fester();
 
     JUCE_LEAK_DETECTOR (TrashBin)

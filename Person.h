@@ -15,8 +15,8 @@ struct Person
     ValueDisplay temperatureDisplay{23.0f, "temperature", "C"};
     Treadmill treadmill{300.0f};
 
-    float excercise (int timeInMinutes, float strideLength = 0.65f);
-    void feedCat (float amountOfFoodKg, const Cat& cat) const;
+    float excercise (const int timeInMinutes, const float strideLength = 0.65f);
+    void feedCat (const float amountOfFoodKg, const Cat& cat) const;
 
    JUCE_LEAK_DETECTOR (Person)
 };

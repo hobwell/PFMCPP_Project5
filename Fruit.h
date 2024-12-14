@@ -14,12 +14,12 @@ struct Fruit
     float mesocarpThicknessCm = 0.05f;
     Seed seed{15};
 
-    float decay (int days);    
-    Seed disperseSeed (float distanceKm);
-    float feedSeed (float energy);
-    void feedSeedAndPrintSeedEnergy (float energy);
+    float decay (const int days);    
+    Seed disperseSeed (const float distanceKm);
+    float feedSeed (const float energy);
+    void feedSeedAndPrintSeedEnergy (const float energy);
     void printMembers() const;
-    void protectSeed (float increment);
+    void protectSeed (const float increment);
 
     JUCE_LEAK_DETECTOR (Fruit)
 };

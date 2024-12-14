@@ -14,10 +14,10 @@ struct Cat
     std::string furPattern = "tabby";
     char sex = 'F';
 
-    void eat (float amountOfFoodKg) const;    
-    bool hunt (std::string creature) const;    
+    void eat (const float amountOfFoodKg) const;    
+    bool hunt (const std::string creature) const;    
     void printMembers() const;    
-    void purr (float volumeDb) const;
+    void purr (const float volumeDb) const;
     int unrollToiletPaper (int numSwipes = 4, int squaresRemaining = 400) const;
     
     JUCE_LEAK_DETECTOR (Cat)

@@ -10,7 +10,7 @@ Fruit::~Fruit()
     std::cout << "A Fruit has been destructed." << std::endl;
 }
 
-float Fruit::decay (int days)
+float Fruit::decay (const int days)
 {
     float integrity = (endospermLevel + hydrationLevel + epicarpThicknessCm + mesocarpThicknessCm) / 4.0f;
     
@@ -32,7 +32,7 @@ float Fruit::decay (int days)
     return integrity;
 }
 
-Seed Fruit::disperseSeed (float distanceKm)
+Seed Fruit::disperseSeed (const float distanceKm)
 {
     seed.daysDormant = 0;
     seed.coatIntegrity -= distanceKm / 100.0f;
@@ -40,14 +40,14 @@ Seed Fruit::disperseSeed (float distanceKm)
     return seed;
 }
 
-float Fruit::feedSeed (float energy)
+float Fruit::feedSeed (const float energy)
 {
     seed.storedEnergy += energy;
 
     return seed.storedEnergy;
 }
 
-void Fruit::feedSeedAndPrintSeedEnergy (float energy)
+void Fruit::feedSeedAndPrintSeedEnergy (const float energy)
 {
     std::cout << std::endl << this->feedSeed (energy) << " total energy stored." << std::endl;
 }
@@ -60,7 +60,7 @@ void Fruit::printMembers() const
     std::cout << "Fruit: mesocarpThicknessCm: " << this->mesocarpThicknessCm << std::endl;
 }
 
-void Fruit::protectSeed (float increment)
+void Fruit::protectSeed (const float increment)
 {
     std::cout << "Hydration level: " << hydrationLevel << std::endl;
     epicarpThicknessCm += increment;

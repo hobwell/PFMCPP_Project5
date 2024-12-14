@@ -13,19 +13,19 @@ ValueDisplay::~ValueDisplay()
     std::cout << "A ValueDisplay has been destructed!" << std::endl;
 }
 
-void ValueDisplay::changeColour (std::string newColor)
+void ValueDisplay::changeColour (const std::string newColor)
 {
     colour = newColor;
 }
 
-void ValueDisplay::changeFont (std::string newFont, int newFontSize)
+void ValueDisplay::changeFont (const std::string newFont, const int newFontSize)
 {
     std::cout << "Changing font from " << font << " " << fontSize << "pt to " << newFont << " " << newFontSize << "pt" << std::endl;
     font = newFont;
     fontSize = newFontSize;
 }
 
-int ValueDisplay::growFontSize (int numSteps)
+int ValueDisplay::growFontSize (const int numSteps)
 {   
     if (numSteps > 0)
     {
@@ -47,7 +47,7 @@ int ValueDisplay::growFontSize (int numSteps)
     return fontSize;
 }
 
-int ValueDisplay::shrinkFontSize (int numSteps)
+int ValueDisplay::shrinkFontSize (const int numSteps)
 {   
     if (numSteps > 0)
     {
@@ -77,7 +77,7 @@ int ValueDisplay::shrinkFontSize (int numSteps)
     return fontSize;
 }
 
-void ValueDisplay::growFontSizeAndReportNewFontSize (int numSteps)
+void ValueDisplay::growFontSizeAndReportNewFontSize (const int numSteps)
 {
     std::cout << "New font size: " << this->growFontSize (numSteps) << std::endl;
 }
@@ -87,12 +87,12 @@ void ValueDisplay::printFontInfo() const
     std::cout << this->name << " (" << this->font << ", " << this->fontSize << "pt, " << this->colour << "): " << this->value << " " << this->unit << std::endl;
 }
 
-void ValueDisplay::shrinkFontSizeAndReportNewFontSize (int numSteps)
+void ValueDisplay::shrinkFontSizeAndReportNewFontSize (const int numSteps)
 {
     std::cout << "New font size: " << this->shrinkFontSize (numSteps) << std::endl;
 }
 
-void ValueDisplay::updateValue (float newValue)
+void ValueDisplay::updateValue (const float newValue)
 {
     std::cout << "Changing " << name << " from " << value << " to " << newValue << " " << unit << std::endl;
     value = newValue;    

@@ -12,7 +12,7 @@ Cat::~Cat()
     std::cout << "A " << this->furColour << " " << this->furPattern << " Cat has been destructed." << std::endl;
 }
 
-void Cat::eat (float amountOfFoodKg) const
+void Cat::eat (const float amountOfFoodKg) const
 {
     if (amountOfFoodKg > 0.0f)
         std::cout << "nom nom nom" << std::endl;
@@ -20,7 +20,7 @@ void Cat::eat (float amountOfFoodKg) const
         std::cout << "meow" << std::endl;
 }
 
-bool Cat::hunt (std::string creature) const
+bool Cat::hunt (const std::string creature) const
 {
     std::cout << "The " << eyeColour << "-eyed cat is hunting a " << creature << "!" << std::endl;
 
@@ -50,7 +50,7 @@ void Cat::printMembers() const
     std::cout << "Cat: sex: " << this->sex << std::endl;
 }
 
-void Cat::purr (float volumeDb) const
+void Cat::purr (const float volumeDb) const
 {
     if (volumeDb <= 0.0f)
     {

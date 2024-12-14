@@ -11,7 +11,7 @@ Seed::~Seed()
     std::cout << "A Seed has been destructed." << std::endl;
 }
 
-bool Seed::germinate (int days)
+bool Seed::germinate (const int days)
 {
     bool germinated = false;
     bool enoughEnergy = true;
@@ -45,7 +45,7 @@ bool Seed::germinate (int days)
     return germinated;
 }
 
-int Seed::growLeaves (bool germinated, int numLeaves)
+int Seed::growLeaves (const bool germinated, const int numLeaves)
 {
     if (germinated)
     {
@@ -65,7 +65,7 @@ int Seed::growLeaves (bool germinated, int numLeaves)
     return totalLeaves;
 }
 
-bool Seed::growRoot (bool germinated)
+bool Seed::growRoot (const bool germinated)
 {
     if (germinated)
     {
@@ -85,7 +85,7 @@ bool Seed::growRoot (bool germinated)
     return false;
 }
 
-bool Seed::growStem (bool germinated)
+bool Seed::growStem (const bool germinated)
 {
     if (germinated)
     {
