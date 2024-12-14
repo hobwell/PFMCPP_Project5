@@ -13,8 +13,8 @@ Person::Person()
 Person::~Person()
 {
     std::cout << std::endl << "As their last act, the cats have a bit of fun." << std::endl;
-    geisha.hunt("mouse");
-    dali.unrollToiletPaper(11, 400);
+    geisha.hunt ("mouse");
+    dali.unrollToiletPaper (11, 400);
 }
 
 float Person::excercise (const int timeInMinutes, const float strideLength)

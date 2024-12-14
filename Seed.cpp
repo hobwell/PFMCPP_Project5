@@ -1,6 +1,6 @@
 #include "Seed.h"
 
-Seed::Seed(int germinationDays)
+Seed::Seed (int germinationDays)
 {
     daysToGerminate = germinationDays;
     std::cout << "A Seed has been constructed!" << std::endl;
@@ -89,7 +89,7 @@ bool Seed::growStem (const bool germinated)
 {
     if (germinated)
     {
-         std::cout << "Coat Integrity: " << coatIntegrity << std::endl;
+        std::cout << "Coat Integrity: " << coatIntegrity << std::endl;
         if (coatIntegrity < 0.5f)
         {
             storedEnergy -= 0.07f;

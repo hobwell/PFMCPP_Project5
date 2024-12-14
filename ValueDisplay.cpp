@@ -47,6 +47,16 @@ int ValueDisplay::growFontSize (const int numSteps)
     return fontSize;
 }
 
+void ValueDisplay::growFontSizeAndReportNewFontSize (const int numSteps)
+{
+    std::cout << "New font size: " << this->growFontSize (numSteps) << std::endl;
+}
+
+void ValueDisplay::printFontInfo() const
+{
+    std::cout << this->name << " (" << this->font << ", " << this->fontSize << "pt, " << this->colour << "): " << this->value << " " << this->unit << std::endl;
+}
+
 int ValueDisplay::shrinkFontSize (const int numSteps)
 {   
     if (numSteps > 0)
@@ -75,16 +85,6 @@ int ValueDisplay::shrinkFontSize (const int numSteps)
     }
         
     return fontSize;
-}
-
-void ValueDisplay::growFontSizeAndReportNewFontSize (const int numSteps)
-{
-    std::cout << "New font size: " << this->growFontSize (numSteps) << std::endl;
-}
-
-void ValueDisplay::printFontInfo() const
-{
-    std::cout << this->name << " (" << this->font << ", " << this->fontSize << "pt, " << this->colour << "): " << this->value << " " << this->unit << std::endl;
 }
 
 void ValueDisplay::shrinkFontSizeAndReportNewFontSize (const int numSteps)
