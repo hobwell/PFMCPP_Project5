@@ -1,3 +1,8 @@
+#include "Cat.h"
+#include "Fruit.h"
+#include "Person.h"
+#include "TrashBin.h"
+#include "Treadmill.h"
 #include "Wrappers.h"
 
 CatWrapper::CatWrapper (Cat* c) : cat (c) {}

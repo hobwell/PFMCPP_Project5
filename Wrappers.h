@@ -1,10 +1,6 @@
 #pragma once
 
-#include "Cat.h"
-#include "Fruit.h"
-#include "Person.h"
-#include "TrashBin.h"
-#include "Treadmill.h"
+struct Cat;
 
 struct CatWrapper
 {
@@ -14,6 +10,8 @@ struct CatWrapper
     Cat* cat = nullptr;
 };
 
+struct Fruit;
+
 struct FruitWrapper
 {
     FruitWrapper (Fruit* f);
@@ -21,6 +19,8 @@ struct FruitWrapper
 
     Fruit* fruit = nullptr;
 };
+
+struct Person;
 
 struct PersonWrapper
 {
@@ -30,6 +30,8 @@ struct PersonWrapper
     Person* person = nullptr;
 };
 
+struct TrashBin;
+
 struct TrashBinWrapper
 {
     TrashBinWrapper (TrashBin* tb);
@@ -38,6 +40,8 @@ struct TrashBinWrapper
 
     TrashBin* trashBin = nullptr;
 };
+
+struct Treadmill;
 
 struct TreadmillWrapper
 {

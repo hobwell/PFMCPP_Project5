@@ -1,6 +1,6 @@
 #include "ValueDisplay.h"
 
-ValueDisplay::ValueDisplay (float val, std::string valName, std::string valUnit)
+ValueDisplay::ValueDisplay (const float val, const std::string valName, const std::string valUnit)
 {
     value = val;
     name = valName;

@@ -1,6 +1,6 @@
 #include "Seed.h"
 
-Seed::Seed (int germinationDays)
+Seed::Seed (const int germinationDays)
 {
     daysToGerminate = germinationDays;
     std::cout << "A Seed has been constructed!" << std::endl;

@@ -1,6 +1,6 @@
 #include "Treadmill.h"
 
-Treadmill::Treadmill (float weightAllowance)
+Treadmill::Treadmill (const float weightAllowance)
 {
     maximumWeightAllowanceKg = weightAllowance;
     inclineDisplay.colour = "red";

@@ -4,7 +4,7 @@
 
 struct Seed
 {
-    Seed (int germinationDays);
+    Seed (const int germinationDays);
     ~Seed();
     
     float coatIntegrity = 1.0f;

@@ -5,7 +5,7 @@
 
 struct Treadmill
 {
-    Treadmill (float weightAllowance = 150.0f);
+    Treadmill (const float weightAllowance = 150.0f);
     ~Treadmill();
 
     float currentSpeedKph = 0.0f;

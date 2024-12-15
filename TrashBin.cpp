@@ -1,6 +1,6 @@
 #include "TrashBin.h"
 
-TrashBin::TrashBin (Cat& nearbyCat) : seed{15}
+TrashBin::TrashBin (const Cat& nearbyCat) : seed{15}
 {
     std::cout << std::endl << "A TrashBin has popped into existence, complete with trash (and cats)!" << std::endl;
     std::cout << "The smell is attacting some cats!" << std::endl;

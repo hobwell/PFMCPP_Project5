@@ -1,6 +1,6 @@
 #include "Cat.h"
 
-Cat::Cat (std::string pattern, std::string colour)
+Cat::Cat (const std::string pattern, const std::string colour)
 {
     furPattern = pattern;
     furColour = colour;

@@ -5,7 +5,7 @@
 
 struct Cat
 {
-    Cat (std::string pattern, std::string colour);
+    Cat (const std::string pattern, const std::string colour);
     ~Cat();
 
     int age = 3;    

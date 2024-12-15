@@ -7,7 +7,7 @@
 
 struct TrashBin
 {
-    TrashBin (Cat& nearbyCat);
+    TrashBin (const Cat& nearbyCat);
     ~TrashBin();
 
     Cat alleyCat{"solid", "black"};    
